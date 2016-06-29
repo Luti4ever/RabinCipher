@@ -1,5 +1,6 @@
 import sympy
 import random
+import math
 
 #Program variables
 dictionaryWords=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','w','x','y','z',
@@ -96,7 +97,7 @@ def SelectPair():
     return pair
 
 def RabinCypherMessage(message):
-    cyphertext = []
+    ciphertext = []
     print("\nWiadomość do zaszyfrowania w postaci cyfrowej:")
     for i in range(0, len(message)):
         print(message[i], " ", end="")
@@ -107,11 +108,47 @@ def RabinCypherMessage(message):
 
     for i in range(0, len(message)):
         calcTemp = pow(message[i],2,publicKey)
-        cyphertext.append(calcTemp)
+        ciphertext.append(calcTemp)
 
     print("Kryptogram:")
-    for i in range(0, len(cyphertext)):
-        print(cyphertext[i], " ", end="")
+    for i in range(0, len(ciphertext)):
+        print(ciphertext[i], " ", end="")
+        
+    return ciphertext
+
+def ExtendedGCD(p, q):
+    #This method calculates pair (a,b) which meets conditions a*p + b*q = 1 using extended GCD algorithm
+    pair = []
+    a = 1
+    b = 0
+    r = 0
+    s = 1
+
+    while(q != 0):
+        c = p % q
+        quot = math.floor(p/q)
+        p = q
+        q = c
+        r_tmp = r
+        s_tmp = s
+        r = a - quot * r
+        s = b - quot * s
+        a = r_tmp
+        b = s_tmp
+
+    pair.append(a)
+    pair.append(b)
+
+    print("Znalezione liczby to: ", a, " oraz ", b)
+
+    return pair
+
+def RabinDecypherMessage(ciphertext):
+    receivedMessage = []
+
+
+
+    return receivedMessage
 
 
 ################################# MAIN PROGRAM #####################################
@@ -120,3 +157,5 @@ sentance = "Ola ma kutasa"
 
 CheckSentence(sentance)
 RabinCypherMessage(EncodeSentenceProvided(sentance))
+
+# ExtendedGCD(97, 79)
